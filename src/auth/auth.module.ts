@@ -7,13 +7,16 @@ import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
 import { UserRepository } from './user.repository';
 
+import * as config from 'config';
+
+const jwtConfig = config.get('jwt');
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
-      secret: 'HelloWorld20210911',
+      secret: process.env.JWT_SECRET || jwtConfig.secret,
       signOptions: {
-        expiresIn: 60 * 60, // 1 hour
+        expiresIn: jwtConfig.expiresIn, // 60 * 60: 1 hour
       },
     }),
     TypeOrmModule.forFeature([UserRepository]),

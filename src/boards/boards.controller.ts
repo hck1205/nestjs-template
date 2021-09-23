@@ -22,22 +22,22 @@ import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { BoardStatusValidationPipe } from './pipes/board-status-validation.pipe';
 
-@Controller('boards')
+@Controller({ path: 'boards', version: '1' })
 @UseGuards(AuthGuard())
 export class BoardsController {
   private logger = new Logger('BoardController');
 
   constructor(private boardsService: BoardsService) {}
 
-  // @Get('/')
-  // getAllBoard(): Board[] {
-  //   return this.boardsService.getAllBoards();
-  // }
+  @Get('/')
+  getAllBoard(): Promise<Board[]> {
+    return this.boardsService.getAllBoards();
+  }
 
-  @Get()
-  getAllBoard(@GetUser() user: User): Promise<Board[]> {
+  @Get('/user')
+  getAllBoardsByUser(@GetUser() user: User): Promise<Board[]> {
     this.logger.verbose(`User ${user.username} trying to get all boards`);
-    return this.boardsService.getAllBoards(user);
+    return this.boardsService.getAllBoardsByUser(user);
   }
 
   // @Post('/')

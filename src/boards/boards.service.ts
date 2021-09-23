@@ -13,11 +13,12 @@ export class BoardsService {
     @InjectRepository(BoardRepository)
     private boardRepository: BoardRepository,
   ) {}
-  // getAllBoards(): Board[] {
-  //   return this.boards;
-  // }
 
-  async getAllBoards(user: User): Promise<Board[]> {
+  getAllBoards(): Promise<Board[]> {
+    return this.boardRepository.find();
+  }
+
+  async getAllBoardsByUser(user: User): Promise<Board[]> {
     const query = this.boardRepository.createQueryBuilder('board');
 
     query.where('board.userId = :userId', { userId: user.id });
@@ -25,8 +26,6 @@ export class BoardsService {
     const boards = await query.getMany();
 
     return boards;
-
-    // return this.boardRepository.find();
   }
 
   // createBoard(createBoardDto: CreateBoardDto) {

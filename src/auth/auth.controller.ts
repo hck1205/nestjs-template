@@ -11,12 +11,12 @@ import { AuthCredentialDto } from './dto/auth-credential.dto';
 import { GetUser } from './get-user.decorator';
 import { User } from './user.entity';
 
-@Controller('auth')
+@Controller({ path: 'auth', version: '1' })
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('/signup')
-  signUp(@Body() authCredentialDto: AuthCredentialDto): Promise<void> {
+  signUp(@Body() authCredentialDto: AuthCredentialDto): Promise<User> {
     return this.authService.signUp(authCredentialDto);
   }
 

@@ -6,3 +6,6 @@ db:
 
 jwt:
   secret: 'HelloWorld20210911'
+
+jwtRefresh:
+  secret: 'HelloWorldRefresh20211006'

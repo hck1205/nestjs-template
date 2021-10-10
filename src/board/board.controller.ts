@@ -18,7 +18,7 @@ import { User } from 'src/auth/user.entity';
 
 import { BoardStatus } from './board-status.enum';
 import { Board } from './board.entity';
-import { BoardsService } from './boards.service';
+import { BoardService } from './board.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { BoardStatusValidationPipe } from './pipes/board-status-validation.pipe';
 
@@ -27,32 +27,32 @@ import { BoardStatusValidationPipe } from './pipes/board-status-validation.pipe'
 export class BoardsController {
   private logger = new Logger('BoardController');
 
-  constructor(private boardsService: BoardsService) {}
+  constructor(private boardService: BoardService) {}
 
   @Get('/')
   getAllBoard(): Promise<Board[]> {
-    return this.boardsService.getAllBoards();
+    return this.boardService.getAllBoards();
   }
 
   @Get('/user')
   getAllBoardsByUser(@GetUser() user: User): Promise<Board[]> {
     this.logger.verbose(`User ${user.username} trying to get all boards`);
-    return this.boardsService.getAllBoardsByUser(user);
+    return this.boardService.getAllBoardsByUser(user);
   }
 
   // @Post('/')
   // @UsePipes(ValidationPipe)
   // createBoard(@Body() createBoardDto: CreateBoardDto): Board {
-  //   return this.boardsService.createBoard(createBoardDto);
+  //   return this.boardService.createBoard(createBoardDto);
   // }
 
   @Get('/:id') getBoardById(@Param('id') id: number): Promise<Board> {
-    return this.boardsService.getBoardById(id);
+    return this.boardService.getBoardById(id);
   }
 
   // @Get('/:id')
   // getBoardById(@Param('id') id: string): Board {
-  //   return this.boardsService.getBoardById(id);
+  //   return this.boardService.getBoardById(id);
   // }
 
   @Post()
@@ -66,7 +66,7 @@ export class BoardsController {
         createBoardDto,
       )}`,
     );
-    return this.boardsService.createBoard(createBoardDto, user);
+    return this.boardService.createBoard(createBoardDto, user);
   }
 
   @Delete('/:id')
@@ -74,12 +74,12 @@ export class BoardsController {
     @Param('id', ParseIntPipe) id,
     @GetUser() user: User,
   ): Promise<void> {
-    return this.boardsService.deleteBoard(id, user);
+    return this.boardService.deleteBoard(id, user);
   }
 
   // @Delete('/:id')
   // deleteBoardById(@Param('id') id: string): void {
-  //   return this.boardsService.deleteBoardId(id);
+  //   return this.boardService.deleteBoardId(id);
   // }
 
   @Patch('/:id/status')
@@ -87,7 +87,7 @@ export class BoardsController {
     @Param('id', ParseIntPipe) id: number,
     @Body('status', BoardStatusValidationPipe) status: BoardStatus,
   ) {
-    return this.boardsService.updateBoardStatus(id, status);
+    return this.boardService.updateBoardStatus(id, status);
   }
 
   // @Patch('/:id/status')
@@ -95,6 +95,6 @@ export class BoardsController {
   //   @Param('id') id: string,
   //   @Body('status', BoardStatusValidationPipe) status: BoardStatus,
   // ): Board {
-  //   return this.boardsService.updateBoardStatus(id, status);
+  //   return this.boardService.updateBoardStatus(id, status);
   // }
 }

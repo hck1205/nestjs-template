@@ -1,4 +1,4 @@
-import { Board } from 'src/boards/board.entity';
+import { Board } from 'src/board/board.entity';
 import {
   BaseEntity,
   Column,
@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 @Unique(['username'])
@@ -22,4 +23,8 @@ export class User extends BaseEntity {
 
   @OneToMany((type) => Board, (board) => board.user, { eager: true })
   boards: Board[];
+
+  @Column({ nullable: true })
+  @Exclude()
+  refreshToken?: string;
 }

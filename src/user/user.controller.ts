@@ -1,12 +1,7 @@
 import {
   Body,
   Controller,
-  Delete,
-  Get,
   Logger,
-  Param,
-  ParseIntPipe,
-  Patch,
   Post,
   UseGuards,
   UsePipes,
@@ -14,15 +9,19 @@ import {
 } from '@nestjs/common';
 
 import { AuthGuard } from '@nestjs/passport';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UserService } from './user.service';
 
 @Controller({ path: 'user', version: '1' })
 @UseGuards(AuthGuard())
-export class User {
-  private logger = new Logger('BoardController');
+export class UserController {
+  private logger = new Logger('UserController');
 
   constructor(private userService: UserService) {}
 
   @Post('/')
   @UsePipes(ValidationPipe)
-  createBoard() {}
+  createUser(@Body() createUserDto: CreateUserDto) {
+    return this.userService.createUser(createUserDto);
+  }
 }

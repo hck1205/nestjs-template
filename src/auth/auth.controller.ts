@@ -8,8 +8,10 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { AuthCredentialDto } from './dto/auth-credential.dto';
-import { GetUser } from './get-user.decorator';
-import { User } from './user.entity';
+
+import { GetUser } from 'src/user/get-user.decorator';
+import { User } from 'src/user/user.entity';
+// import { User } from './user.entity';
 
 @Controller({ path: 'auth', version: '1' })
 export class AuthController {

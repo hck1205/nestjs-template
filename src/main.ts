@@ -6,10 +6,10 @@ import * as config from 'config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableVersioning({
-    type: VersioningType.MEDIA_TYPE,
-    key: 'v=',
-  });
+  // app.enableVersioning({
+  //   type: VersioningType.MEDIA_TYPE,
+  //   key: 'v=',
+  // });
   app.enableCors({
     origin: true,
     methods: 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS',

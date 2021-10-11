@@ -22,9 +22,9 @@ import { BoardService } from './board.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { BoardStatusValidationPipe } from './pipes/board-status-validation.pipe';
 
-@Controller({ path: 'boards', version: '1' })
+@Controller({ path: 'board', version: '1' })
 @UseGuards(AuthGuard())
-export class BoardsController {
+export class BoardController {
   private logger = new Logger('BoardController');
 
   constructor(private boardService: BoardService) {}
@@ -55,7 +55,7 @@ export class BoardsController {
   //   return this.boardService.getBoardById(id);
   // }
 
-  @Post()
+  @Post('/')
   @UsePipes(ValidationPipe)
   createBoard(
     @Body() createBoardDto: CreateBoardDto,
